@@ -105,11 +105,11 @@ class PostController extends Controller
 
         $post->delete();
 
-        // return redirect(url("posts"))->with('success','data deleted successfully');
+        return redirect(url("posts"))->with('success','data deleted successfully');
 
         // $post = posts::where('id',$request->id)->delete();
-        return response()->json(['message'=>'data deleted successfully']);
-     
+        // return response()->json(['message'=>'data deleted successfully']);
+
     }
 
     public function search(Request $request){
@@ -120,11 +120,11 @@ class PostController extends Controller
 
 
         $posts = posts::where(function($search) use($key){
-            $search->where('title', 'like', "$key%")
-            ->orWhere('desc','like',"$key%");
+            $search->where('title', 'like', "%$key%")
+            ->orWhere('desc','like',"%$key%");
         })
         ->orWhereHas('user',function($search) use($key){
-            $search->where('name','like',"$key%");
+            $search->where('name','like',"%$key%");
         })
         ->get();
 

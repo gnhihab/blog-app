@@ -1,12 +1,13 @@
+@include('errors')
 
 @include('User.head')
 
-<form method="POST" action="{{url("posts/$post->id")}}" enctype="multipart/form-data" >
+<form class='form-control' method="POST" action="{{url("posts/$post->id")}}" enctype="multipart/form-data" >
     @csrf
     @method('PUT')
 
 
-  <div class="card" style="width: 18rem;">
+  <div class="card" style="width: 24rem; margin-left:31%; margin-top:38px">
 
     <div class="card-header">
       Edit Your Post
