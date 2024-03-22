@@ -19,11 +19,12 @@
 
         @foreach ($user->posts as $post)
             <div class="col-md-4">
-                <div class="card" style="">
+                <div class="card" style="margin-top:20px">
                     <div class="card-header">
-                        Post ID: {{$post->id}}
+                        Your Post
                     </div>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ID: {{$post->id}}</li>
                         <li class="list-group-item">Title: {{$post->title}}</li>
                         <li class="list-group-item">Description: {{$post->desc}}</li>
                         <li class="list-group-item">Image: <img src="{{ asset("storage/$post->image") }}" class="card-img-top" alt=""></li>

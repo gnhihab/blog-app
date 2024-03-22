@@ -5,16 +5,7 @@
 <form method="POST" class=" form-control" action="{{ route('store') }}" enctype="multipart/form-data">
     @csrf
 
-    <div class="card " style="width: 24rem; margin-left:31%; margin-top:40px">
-
-
-        <div class="card-header">
-            Crerate Your Post
-        </div>
-        <ul class="list-group list-group-flush">
-
-        <li class="list-group-item">
-
+    <div class="mb-3">
         <label for="exampleInputEmail1">User Name</label>
 
         <select name="user_id" id="">
@@ -23,25 +14,29 @@
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach
         </select>
-        </li>
 
-        <li class="list-group-item">Post Title
-            <input type="text" name="title" class="form-control text-black" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter title">
-        </li>
+    </div>
 
-        <li class="list-group-item">Post Desc
-            <textarea type="text" name="desc" class="form-control text-black" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter desc"></textarea>
-        </li>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Post Title</label>
+      <input type="text" name="title" class="form-control text-black" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Title">
 
-        <li class="list-group-item">post Image
-            <input type="file" name="image" class="form-control text-black" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter image">
-        </li>
+    </div>
 
-        <button type="submit" class="btn btn-success">Submit</button>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Post Desc</label>
+        <input type="text" name="desc" class="form-control text-black" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Desc">
 
-        </ul>
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Post Image</label>
+        <input type="file" name="image" class="form-control text-black" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Image">
+
+    </div>
 
 
-</form>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
 
 </body>

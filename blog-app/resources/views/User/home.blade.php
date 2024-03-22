@@ -88,7 +88,7 @@
             <tr>
                 <th scope="row">{{ $post->id }}</th>
                 <td>{{ $post->title }}</td>
-                <td>{{ $post->desc }}</td>
+                <td style="max-width: 200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ $post->desc }}</td>
 
                 <td><img src="{{ asset("storage/$post->image") }}" width="100px" alt="" srcset="">
                 </td>

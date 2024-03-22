@@ -7,7 +7,7 @@
     @method('PUT')
 
 
-  <div class="card" style="width: 24rem; margin-left:31%; margin-top:38px">
+  <div class="card" style="width: 28rem; margin-left:31%; margin-top:25px">
 
     <div class="card-header">
       Edit Your Post
@@ -19,10 +19,13 @@
         <input type="text" name="title" class="form-control text-dark" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$post->title}}">
       </li>
       <li class="list-group-item">Description
-        <input type="text" name="desc" class="form-control text-dark" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$post->desc}}">
+        <textarea name="desc" class="form-control text-dark" style="width: 100%;height: 200px;" id="exampleInputEmail1" aria-describedby="emailHelp">{{$post->desc}}</textarea>
       </li>
       <li class="list-group-item"> Old Image
-            <img src="{{asset("storage/$post->image")}}"  alt="...">
+            <img src="{{asset("storage/$post->image")}}"  alt="image" style="width:260px;hight:280px">
+        </li>
+
+        <li class="list-group-item">
         New Image <input type="file" name="image" class="form-control text-black" aria-describedby="emailHelp">
        </li>
 </ul>
