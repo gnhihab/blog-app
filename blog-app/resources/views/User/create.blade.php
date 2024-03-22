@@ -1,7 +1,7 @@
 @include('errors')
 
 @include('User.head')
-<div style="margin:auto;width:75%;margin-top:30px;pading:40px">
+<div style="margin:auto;width:75%;margin-top:30px;padding:40px">
 <form method="POST" class=" form-control" action="{{ route('store') }}" enctype="multipart/form-data">
     @csrf
 
