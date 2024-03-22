@@ -1,7 +1,7 @@
 @include('errors')
 
 @include('User.head')
-
+<div style="margin:auto;width:75%;margin-top:30px;pading:40px">
 <form method="POST" class=" form-control" action="{{ route('store') }}" enctype="multipart/form-data">
     @csrf
 
@@ -38,5 +38,5 @@
 
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
-
+</div>
 </body>

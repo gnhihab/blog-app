@@ -58,10 +58,11 @@
     {{old('key')}}--}}
 
     @if ($posts->isEmpty())
-
+    <div class="alert alert-warning" role="alert">
         <p>No posts found</p>
-
+    </div>
     @endif
+
 
 </form>
 
