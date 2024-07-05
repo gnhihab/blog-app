@@ -1,5 +1,14 @@
 
-@include('User.head')
+@include('Post.head')
+
+<div style="text-align:right; margin:10px">
+
+    <h1>
+        <a class="btn btn-primary btn-lg" href="{{ url('posts/create') }}" style="margin-top:10px">Create New Post</a>
+    </h1>
+
+</div>
+
 
 <div class="card" style="width: 24rem; margin-left:31%; margin-top:15px" >
     <div class="card-header">

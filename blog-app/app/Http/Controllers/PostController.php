@@ -2,79 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\posts;
-use Illuminate\Http\Request;
-use App\Http\Resources\PostResource;
 use App\Models\User;
+use App\Models\Posts;
+use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-
-use function PHPUnit\Framework\isEmpty;
 
 class PostController extends Controller
 {
-     //all
-     public function all(){
-        $posts = posts::all();
-        // return PostResource::collection($posts);
-        // return view($posts);
+
+    public function index()
+    {
+        $posts = Posts::all();
 
         // $posts = posts::paginate(2);
-        return view("User.home",compact("posts"));
-     }
-    public function create(){
 
-        // dd("hi");
+        return view("Post.home",compact("posts"));
 
+    }
 
-        // return view("User.create");
-        $posts = posts::all();
+    public function create()
+
+    {
         $users = User::all();
-        return view('User.create',compact("posts","users"));
-    }
-
-    public function store(Request $request){
-
-        // dd($request->all());
-
-
-        $data =$request->validate([
-
-            "title"=>"required|string|max:255",
-            "desc"=>"required|string",
-            "image"=>"required|image|mimes:png,jpg",
-            "user_id"=>"required|exists:users,id",
-
-        ]);
-
-
-
-        $data['image']=Storage::putFile("posts",$data['image']);
-
-        posts::create($data);
-
-        return redirect(url("posts"))->with('success',"'data inserted successfully'");
+        return view('Post.create',compact("users"));
 
     }
+
+    public function store(PostRequest $request)
+    {
+        $data = $request->validated();
+
+        $data['image'] = Storage::putFile("posts", $data['image']);
+
+        $post = Posts::create($data);
+        $user = User::find($post->user_id);
+        if ($user) {
+            $user->posts_num = $user->posts()->count();
+            $user->save();
+        }
+
+        return redirect()->route('posts.index')->with('success', 'data inserted successfully');
+    }
+
 
     public function edit($id){
 
-        $post=posts::FindOrFail($id);
-        return view('User.edit',compact("post"));
+        $post=Posts::FindOrFail($id);
+        $users=User::all();
+        return view('Post.edit',compact("post","users"));
 
     }
 
-    public function update(Request $request ,$id){
+    public function update(PostRequest $request ,$id){
 
-        $data =$request->validate([
+        $data =$request->validated();
 
-            "title"=>"required|string|max:255",
-            "desc"=>"required|string",
-            "image"=>"image|mimes:png,jpg",
-
-        ]);
-
-        $post=posts::FindOrFail($id);
+        $post=Posts::FindOrFail($id);
 
         if($request->has('image')){
 
@@ -88,63 +71,29 @@ class PostController extends Controller
         }
 
         $post->update($data);
-        return redirect(url("posts"))->with('success','data updated successfully');
+        return redirect()->route('posts.index')->with('success','data updated successfully');
 
 
     }
 
-    public function delete(Request $request,$id){
+    public function destroy($id){
 
-        $post=posts::findOrFail($id);
-
-        if($post->image !== null){
-
-            Storage::delete($post->image);
-
-        }
+        $post=Posts::findOrFail($id);
 
         $post->delete();
 
-        return redirect(url("posts"))->with('success','data deleted successfully');
-
-        // $post = posts::where('id',$request->id)->delete();
-        // return response()->json(['message'=>'data deleted successfully']);
-
-    }
-
-    public function search(Request $request){
-
-        $key=$request->input('key');
-        // $posts=posts::where("title","like","$key%")->get();
-        // session()->put('search_query',$key);
+        // return redirect()->route('posts.index')->with('success','data deleted successfully');
 
 
-        $posts = posts::where(function($search) use($key){
-            $search->where('title', 'like', "%$key%")
-            ->orWhere('desc','like',"%$key%");
-        })
-        ->orWhereHas('user',function($search) use($key){
-            $search->where('name','like',"%$key%");
-        })
-        ->get();
-
-
-        // return view("User.home",compact("posts"));
-        return view('User.home',['key'=>$key,'posts'=>$posts]);
+        return response()->json(['message'=>'data deleted successfully']);
 
     }
 
-    public function filter(Request $request ){
+    // public function export(){
 
-        $from=$request->input('from');
-        $to=$request->input('to');
-        $posts = posts::whereBetween('created_at',[$from,$to])->get();
-
-        // return view("User.home",compact("posts"));
-        return view('User.home',['from'=>$from,'to'=>$to,'posts'=>$posts]);
-
-    }
-
+    //     return Excel::download(new PostExport(),'posts.xlsx');
+    // }
 
 
 }
+

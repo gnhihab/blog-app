@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class posts extends Model
+class Posts extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $fillable = [
         'title',
         'desc',
@@ -18,6 +19,20 @@ class posts extends Model
     public function user(){
 
         return $this->belongsTo(User::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+            
+            $user = $post->user;
+            if ($user) {
+                $user->posts_num = $user->posts()->count() - 1;
+                $user->save();
+            }
+        });
     }
 
 }

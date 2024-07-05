@@ -1,14 +1,16 @@
 @include('errors')
 
-@include('User.head')
+@include('Post.head')
+
 <div style="margin:auto;width:75%;margin-top:30px;padding:40px">
-<form method="POST" class=" form-control" action="{{ route('store') }}" enctype="multipart/form-data">
+
+<form method="POST" class=" form-control" action="{{ route('posts.store') }}" enctype="multipart/form-data">
     @csrf
 
     <div class="mb-3">
         <label for="exampleInputEmail1">User Name</label>
 
-        <select name="user_id" id="">
+        <select name="user_id" class="form-select" id="">
             <option selected disabled>Select User Name</option>
             @foreach ($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
