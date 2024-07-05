@@ -1,10 +1,16 @@
 @include('errors')
 
+<<<<<<< HEAD:blog-app/resources/views/Post/create.blade.php
 @include('Post.head')
 
 <div style="margin:auto;width:75%;margin-top:30px;padding:40px">
 
 <form method="POST" class=" form-control" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+=======
+@include('User.head')
+<div style="margin:auto;width:75%;margin-top:30px;padding:40px">
+<form method="POST" class=" form-control" action="{{ route('store') }}" enctype="multipart/form-data">
+>>>>>>> b34619c760b9a214817d9299bbd2e939ac103d01:blog-app/resources/views/User/create.blade.php
     @csrf
 
     <div class="mb-3">
